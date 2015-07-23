@@ -1,3 +1,23 @@
+ var pix;
+
+$.ajax({
+  url: 'https://api.imgur.com/3/album/DDoWy/json',
+  method: 'GET',
+  headers: {
+    'Authorization': 'Client-ID 0550bbc6961d886'
+  }
+})
+.done(function(res) {
+  pix = res.data.images;
+  console.log(pix);
+})
+.fail(function(err) {
+  console.log(err);
+});
+
+
+console.log(pix);
+
 var Tracker = function () {
   this.kitty = [];
   this.player = [0,0];
@@ -15,10 +35,14 @@ Tracker.prototype.pickPlayers = function() {
     this.player[0] = Math.floor(Math.random()*14);
     this.player[1] = Math.floor(Math.random()*14);
   }
+  console.log(pix);
   $('#player1').append("<img id=\"left\" src=\"images/" + this.player[0] + ".jpg\"/><br><br><p>Cat " + (this.player[0] + 1) + "</p>");
   $('#player2').append("<img id=\"right\" src=\"images/" + this.player[1] + ".jpg\"/><br><br><p>Cat " + (this.player[1] + 1) + "</p>");
 return this.player;
 };
+
+
+
 
 Tracker.prototype.getVote = function () {
   $('#left').on({'click': function() {
@@ -42,6 +66,8 @@ var renderChart = function() {
       labels : ["1","2","3","4","5","6", "7", "8", "9", "10", "11", "12", "13", "14"],
       datasets : [
           {
+              scaleShowHorizontalLines: false,
+              scaleShowVerticalLines: false,
               fillColor : "#48A497",
               strokeColor : "#48A4D1",
               data : play.kitty
@@ -54,11 +80,15 @@ var renderChart = function() {
   new Chart(cats).Bar(barData);
 };
 
+// var battleChart = $('#battle')[1].getContext('2d');
+// new Chart(battle).
+
 var saveGame = function() {
   var cuteCatSession = JSON.stringify(play.kitty)
   localStorage.cuteCatSession = cuteCatSession;
   renderChart();
 };
+
 
 var play = new Tracker();
 $('#reset').on({'click': function() {
@@ -76,4 +106,9 @@ if (localStorage.cuteCatSession) {
   }
 };
 renderChart();
-play.Contest();
+$('#player1').append("<img id=\"left\" src=\"images/question.png\"/>");
+$('#player2').append("<img id=\"left\" src=\"images/question.png\"/>");
+$('#start').on({'click': function() {
+  $('.cat_pic').children().remove();
+  play.Contest();
+}});
