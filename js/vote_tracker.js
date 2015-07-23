@@ -15,7 +15,6 @@ $.ajax({
   console.log(err);
 });
 
-
 console.log(pix);
 
 var Tracker = function () {
@@ -35,14 +34,11 @@ Tracker.prototype.pickPlayers = function() {
     this.player[0] = Math.floor(Math.random()*14);
     this.player[1] = Math.floor(Math.random()*14);
   }
-  console.log(pix);
-  $('#player1').append("<img id=\"left\" src=\"images/" + this.player[0] + ".jpg\"/><br><br><p>Cat " + (this.player[0] + 1) + "</p>");
-  $('#player2').append("<img id=\"right\" src=\"images/" + this.player[1] + ".jpg\"/><br><br><p>Cat " + (this.player[1] + 1) + "</p>");
+
+  $('#player1').append("<img id =\"left\" src=\"" + pix[this.player[0]].link + "\"/><br><br><p>Cat " + (this.player[0] + 1) + "</p>");
+  $('#player2').append("<img id =\"right\" src=\"" + pix[this.player[1]].link + "\"/><br><br><p>Cat " + (this.player[1] + 1) + "</p>");
 return this.player;
 };
-
-
-
 
 Tracker.prototype.getVote = function () {
   $('#left').on({'click': function() {
@@ -74,21 +70,15 @@ var renderChart = function() {
           },
       ]
   }
-  // get bar chart canvas
   var cats = $("#cats")[0].getContext("2d");
-  // draw bar chart
   new Chart(cats).Bar(barData);
 };
-
-// var battleChart = $('#battle')[1].getContext('2d');
-// new Chart(battle).
 
 var saveGame = function() {
   var cuteCatSession = JSON.stringify(play.kitty)
   localStorage.cuteCatSession = cuteCatSession;
   renderChart();
 };
-
 
 var play = new Tracker();
 $('#reset').on({'click': function() {
@@ -106,8 +96,9 @@ if (localStorage.cuteCatSession) {
   }
 };
 renderChart();
+
 $('#player1').append("<img id=\"left\" src=\"images/question.png\"/>");
-$('#player2').append("<img id=\"left\" src=\"images/question.png\"/>");
+$('#player2').append("<img id=\"right\" src=\"images/question.png\"/>");
 $('#start').on({'click': function() {
   $('.cat_pic').children().remove();
   play.Contest();

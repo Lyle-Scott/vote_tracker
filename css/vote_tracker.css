@@ -83,6 +83,7 @@ canvas {
   margin-left: 25px;
   margin-right: 25px;
   margin-top: 25px;
+  z-index: 500;
 }
 #cats {
 
@@ -100,6 +101,17 @@ p {
   font-family: garamond;
   text-align: center;
   color: #fff4b8;
+}
+#start {
+  position: relative;
+  top: 25px;
+  border-radius: 15%;  
+  margin-left: auto;
+  margin-right: auto;
+  font-family: garamond;
+  text-align: center;
+  background-color: #fff4b8;
+  transform: scale(+400%, +400%);
 }
 /*#battle {
   position: fixed;
